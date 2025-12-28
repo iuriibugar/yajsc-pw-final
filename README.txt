@@ -1,0 +1,1 @@
+This is an educational Playwright project from a testing course.

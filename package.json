@@ -1,0 +1,25 @@
+{
+  "name": "yajsc-pw-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iuriibugar/yajsc-pw-final.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iuriibugar/yajsc-pw-final/issues"
+  },
+  "homepage": "https://github.com/iuriibugar/yajsc-pw-final#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3"
+  }
+}
