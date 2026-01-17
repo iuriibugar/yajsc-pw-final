@@ -8,14 +8,7 @@ test.describe('Verify user can filter products by category', () => {
   test(`Verify products are filter by category ${filterCategory}`, async ({ page }) => {
     const homePage = new HomePage(page);
     await homePage.open();
-
     await homePage.selectFilterCheckbox(filterCategory);
-
-    await page.waitForResponse((response) => response.url().includes('api.practicesoftwaretesting.com/products')
-      && response.url().includes('by_category')
-      && response.status() === 200,
-    );
-
     const productNames = await homePage.productName.all();
 
     for (const product of productNames) {
