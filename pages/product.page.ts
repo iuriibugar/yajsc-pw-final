@@ -3,6 +3,7 @@ import { BasePage } from './base.page';
 
 export class ProductPage extends BasePage {
   page: Page;
+  productName: Locator;
   priceSection: Locator;
   price: Locator;
   addToCartBtn: Locator;
@@ -11,6 +12,7 @@ export class ProductPage extends BasePage {
   constructor(page: Page) {
     super(page);
     this.page = page;
+    this.productName = this.page.getByTestId('product-name');
     this.priceSection = this.page.locator('.price-section');
     this.price = this.page.getByTestId('unit-price');
     this.addToCartBtn = this.page.getByTestId('add-to-cart');
