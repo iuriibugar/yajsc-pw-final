@@ -4,11 +4,17 @@ import { BasePage } from './base.page';
 export class HomePage extends BasePage {
   page: Page;
   productName: Locator;
+  productPrice: Locator;
+  sortDropdown: Locator;
+  filterCheckbox: Locator;
 
   constructor(page: Page) {
     super(page);
     this.page = page;
     this.productName = this.page.getByTestId('product-name');
+    this.productPrice = this.page.getByTestId('product-price');
+    this.sortDropdown = this.page.getByTestId('sort');
+    this.filterCheckbox = this.page.locator('label');
   }
 
   async open(): Promise<void> {
@@ -16,6 +22,22 @@ export class HomePage extends BasePage {
   }
 
   async clickProductItem(productName: string): Promise<void> {
-    await this.page.getByTestId('product-name').filter({ hasText: productName }).click();
+    await this.productName.filter({ hasText: productName }).click();
+  }
+
+  async selectSortOption(sortOption: string, sort: string): Promise<void> {
+    await this.sortDropdown.selectOption({ label: sortOption });
+    await this.page.waitForResponse((response) => response.url().includes('api.practicesoftwaretesting.com/products')
+      && response.url().includes(sort)
+      && response.status() === 200,
+    );
+  }
+
+  async selectFilterCheckbox(filter: string): Promise<void> {
+    await this.filterCheckbox.filter({ hasText: filter }).click();
+    await this.page.waitForResponse((response) => response.url().includes('api.practicesoftwaretesting.com/products')
+      && response.url().includes('by_category')
+      && response.status() === 200,
+    );
   }
 }

@@ -10,4 +10,8 @@ export class AccountPage extends BasePage {
     this.page = page;
     this.accountTittle = this.page.getByTestId('page-title');
   }
+
+  async open(): Promise<void> {
+    await this.navigate('/account');
+  }
 }
