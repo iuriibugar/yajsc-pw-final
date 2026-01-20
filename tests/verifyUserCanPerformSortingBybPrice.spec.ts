@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/home.page';
+import { expect } from '@playwright/test';
+import { test } from './../fixtures';
 
 const sortingTestData = [
   { sortOption: 'Price (Low - High)', direction: 'ascending' },
@@ -8,11 +8,10 @@ const sortingTestData = [
 
 test.describe('Verify user can perform sorting by price (asc & desc)', () => {
   sortingTestData.forEach((sorting) => {
-    test(`Verify products are sorted by price ${sorting.direction}`, async ({ page }) => {
-      const homePage = new HomePage(page);
-      await homePage.open();
-      await homePage.selectSortOption(sorting.sortOption, 'sort=price');
-      const productPrices = await homePage.productPrice.allInnerTexts();
+    test(`Verify products are sorted by price ${sorting.direction}`, async ({ app }) => {
+      await app.homePage.open();
+      await app.homePage.selectSortOption(sorting.sortOption, 'sort=price');
+      const productPrices = await app.homePage.productPrice.allInnerTexts();
       const sortedPrices = [...productPrices].sort();
 
       if (sorting.direction === 'descending') {
