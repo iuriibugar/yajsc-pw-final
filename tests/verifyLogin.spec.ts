@@ -1,16 +1,15 @@
-import { test, expect } from '@playwright/test';
-import { AccountPage } from '../pages/account.page';
+import { expect } from '@playwright/test';
+import { test } from './../fixtures';
 import path from 'path';
 
 const authFile = path.join(__dirname, '../playwright/.auth/user.json');
 test.use({ storageState: authFile });
 
 test.describe('Verify login with valid credentials', () => {
-  test('Verify login with valid credentials', async ({ page }) => {
-    const accountPage = new AccountPage(page);
-    await accountPage.open();
+  test('Verify login with valid credentials', async ({ app, page }) => {
+    await app.accountPage.open();
     await expect(page).toHaveURL('/account');
-    await expect(accountPage.accountTittle).toHaveText('My account');
-    await expect(accountPage.header.navMenu).toHaveText('Jane Doe');
+    await expect(app.accountPage.accountTittle).toHaveText('My account');
+    await expect(app.accountPage.header.navMenu).toHaveText('Jane Doe');
   });
 });

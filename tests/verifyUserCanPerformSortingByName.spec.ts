@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/home.page';
+import { expect } from '@playwright/test';
+import { test } from './../fixtures';
 
 const sortingTestData = [
   { sortOption: 'Name (A - Z)', direction: 'ascending' },
@@ -8,11 +8,10 @@ const sortingTestData = [
 
 test.describe('Verify user can perform sorting by name (asc & desc)', () => {
   sortingTestData.forEach((sorting) => {
-    test(`Verify products are sorted by name ${sorting.direction}`, async ({ page }) => {
-      const homePage = new HomePage(page);
-      await homePage.open();
-      await homePage.selectSortOption(sorting.sortOption, 'sort=name');
-      const productNames = await homePage.productName.allInnerTexts();
+    test(`Verify products are sorted by name ${sorting.direction}`, async ({ app }) => {
+      await app.homePage.open();
+      await app.homePage.selectSortOption(sorting.sortOption, 'sort=name');
+      const productNames = await app.homePage.productName.allInnerTexts();
       const sortedNames = [...productNames].sort();
 
       if (sorting.direction === 'descending') {
