@@ -1,5 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures';
+import { generateExpirationDate } from '../utils/payment.utils';
+import { ADDRESS_DATA, PAYMENT_DATA } from '../testData/checkout.data';
 
 test.describe('Check user can add product to cart and buy it', () => {
   test('Check user can add product to cart and buy it', async ({ loggedInApp }) => {
@@ -22,22 +24,19 @@ test.describe('Check user can add product to cart and buy it', () => {
     await loggedInApp.checkoutPage.proceedBtn2.click();
 
     await loggedInApp.checkoutPage.state.waitFor({ state: 'visible' });
-    await loggedInApp.checkoutPage.state.fill('California');
+    await loggedInApp.checkoutPage.state.fill(ADDRESS_DATA.state);
     await loggedInApp.checkoutPage.postalCode.waitFor({ state: 'visible' });
-    await loggedInApp.checkoutPage.postalCode.fill('90001');
+    await loggedInApp.checkoutPage.postalCode.fill(ADDRESS_DATA.postalCode);
     await loggedInApp.checkoutPage.proceedBtn3.click();
 
     await loggedInApp.checkoutPage.paymentMethod.selectOption('credit-card');
-    await loggedInApp.checkoutPage.creditCardNumber.fill('1111-1111-1111-1111');
+    await loggedInApp.checkoutPage.creditCardNumber.fill(PAYMENT_DATA.creditCardNumber);
 
-    const expirationDate = new Date();
-    expirationDate.setMonth(expirationDate.getMonth() + 3);
-    const month = String(expirationDate.getMonth() + 1).padStart(2, '0');
-    const year = String(expirationDate.getFullYear());
-    await loggedInApp.checkoutPage.expirationDate.fill(`${month}/${year}`);
+    const expirationDate = generateExpirationDate();
+    await loggedInApp.checkoutPage.expirationDate.fill(expirationDate);
 
-    await loggedInApp.checkoutPage.cvv.fill('111');
-    await loggedInApp.checkoutPage.cardHolderName.fill('Jane Doe');
+    await loggedInApp.checkoutPage.cvv.fill(PAYMENT_DATA.cvv);
+    await loggedInApp.checkoutPage.cardHolderName.fill(PAYMENT_DATA.cardHolderName);
     await loggedInApp.checkoutPage.confirmBtn.click();
 
     await expect(loggedInApp.checkoutPage.paymentSuccessMessage).toHaveText('Payment was successful');
