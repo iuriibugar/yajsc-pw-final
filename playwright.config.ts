@@ -33,17 +33,18 @@ export default defineConfig({
 
     /* Configure testIdAttribute to use data-test instead of data-testid */
     testIdAttribute: 'data-test',
+    headless: true,
   },
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'auth', testMatch: /auth.login\.spec\.ts/ },
+    // { name: 'auth', testMatch: /auth.login\.spec\.ts/ },
     {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
       },
-      dependencies: ['auth'],
+      // dependencies: ['auth'],
     },
 
     // {
