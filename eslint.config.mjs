@@ -102,6 +102,7 @@ export default [
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/prefer-nullish-coalescing': 'off',
+      'camelcase': 'off',
     },
   },
   // Playwright ESlint config
