@@ -2,10 +2,10 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures';
 import { validCredentials } from '../testData/credentials';
 
-const API_URL = 'https://api.practicesoftwaretesting.com';
+import { API_BASE_URL } from '../constants';
 
 test('verify token auth', async ({ app, request }) => {
-  const resp = await request.post(`${API_URL}/users/login`, {
+  const resp = await request.post(`${API_BASE_URL}/users/login`, {
     data: {
       email: validCredentials.email,
       password: validCredentials.password,

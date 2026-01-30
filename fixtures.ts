@@ -2,6 +2,7 @@ import { test as base } from '@playwright/test';
 import { App } from './pages/app.page';
 // import path from 'path';
 import { validCredentials } from './testData/credentials';
+import { API_BASE_URL } from './constants';
 
 // const authFile = path.join(__dirname, './playwright/.auth/user.json');
 
@@ -18,7 +19,7 @@ export const test = base.extend<MyFixtures>({
   },
   // Авторизація через API
   loggedInApp: async ({ request, page }, use) => {
-    const resp = await request.post('https://api.practicesoftwaretesting.com/users/login', {
+    const resp = await request.post(`${API_BASE_URL}/users/login`, {
       data: {
         email: validCredentials.email,
         password: validCredentials.password,
