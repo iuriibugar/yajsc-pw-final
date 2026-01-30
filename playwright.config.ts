@@ -33,7 +33,6 @@ export default defineConfig({
 
     /* Configure testIdAttribute to use data-test instead of data-testid */
     testIdAttribute: 'data-test',
-    headless: true,
   },
 
   /* Configure projects for major browsers */

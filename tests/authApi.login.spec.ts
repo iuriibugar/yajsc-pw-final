@@ -1,8 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from '../fixtures';
 import { validCredentials } from '../testData/credentials';
 
-test('verify token auth', async ({ page, request }) => {
-  const resp = await request.post('https://api.practicesoftwaretesting.com/users/login', {
+const API_URL = 'https://api.practicesoftwaretesting.com';
+
+test('verify token auth', async ({ app, request }) => {
+  const resp = await request.post(`${API_URL}/users/login`, {
     data: {
       email: validCredentials.email,
       password: validCredentials.password,
@@ -11,12 +14,12 @@ test('verify token auth', async ({ page, request }) => {
   const jsonData = await resp.json();
   const token = jsonData.access_token;
 
-  await page.goto('https://practicesoftwaretesting.com');
+  await app.basePage.page.goto('/');
 
-  await page.evaluate((token) => {
+  await app.page.evaluate((token) => {
     localStorage.setItem('auth-token', token);
   }, token);
-  await page.reload();
+  await app.basePage.page.goto('/');
 
-  await expect(page.locator('[data-test="nav-menu"]')).toContainText('Jane Doe');
+  await expect(app.basePage.header.navMenu).toContainText('Jane Doe');
 });

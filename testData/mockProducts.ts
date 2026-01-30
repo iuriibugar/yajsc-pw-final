@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { faker } from '@faker-js/faker';
 
 export function generateMockProductsOnPage(count: number) {
