@@ -6,7 +6,7 @@ const sortingTestData = [
   { sortOption: 'Name (Z - A)', direction: 'descending' },
 ];
 
-test.describe('Verify user can perform sorting by name (asc & desc)', () => {
+test.describe('Verify user can perform sorting by name (asc & desc)', { tag: '@smoke' }, () => {
   sortingTestData.forEach((sorting) => {
     test(`Verify products are sorted by name ${sorting.direction}`, async ({ app }) => {
       await app.homePage.open();

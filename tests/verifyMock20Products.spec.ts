@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures';
 import { generateMockProductsOnPage } from '../testData/mockProducts';
 
-test.describe('Verify user can see mock 20 products on page', () => {
+test.describe('Verify user can see mock 20 products on page', { tag: '@regression' }, () => {
   test('Verify user can see mock 20 products on page', async ({ loggedInApp }) => {
     const mockProducts = generateMockProductsOnPage(20);
 
@@ -11,6 +11,7 @@ test.describe('Verify user can see mock 20 products on page', () => {
     });
 
     await loggedInApp.homePage.open();
+
     expect(await loggedInApp.homePage.productName.count()).toBe(20);
     const productNames = await loggedInApp.homePage.productName.all();
 

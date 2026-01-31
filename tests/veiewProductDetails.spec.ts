@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from './../fixtures';
 
-test.describe('Verify user can view product details', () => {
+test.describe('Verify user can view product details', { tag: '@smoke' }, () => {
   test('Verify login with valid credentials', async ({ app }) => {
     await app.homePage.open();
     await app.homePage.clickProductItem('Combination Pliers');

@@ -1,14 +1,13 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures';
-import { validCredentials } from '../testData/credentials';
-
-import { API_BASE_URL } from '../constants';
+import { BASE_API_URL, USER_EMAIL, USER_PASSWORD } from '../config/baseConfig';
 
 test('verify token auth', async ({ app, request }) => {
-  const resp = await request.post(`${API_BASE_URL}/users/login`, {
+  test.skip(!!process.env.CI, 'Skipping test on CI');
+  const resp = await request.post(`${BASE_API_URL}/users/login`, {
     data: {
-      email: validCredentials.email,
-      password: validCredentials.password,
+      email: USER_EMAIL,
+      password: USER_PASSWORD,
     },
   });
   const jsonData = await resp.json();

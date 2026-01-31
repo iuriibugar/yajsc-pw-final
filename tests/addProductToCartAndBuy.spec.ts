@@ -3,7 +3,7 @@ import { test } from '../fixtures';
 import { generateExpirationDate } from '../utils/payment.utils';
 import { ADDRESS_DATA, PAYMENT_DATA } from '../testData/checkout.data';
 
-test.describe('Check user can add product to cart and buy it', () => {
+test.describe('Check user can add product to cart and buy it', { tag: '@smoke' }, () => {
   test('Check user can add product to cart and buy it', async ({ loggedInApp }) => {
     await expect(loggedInApp.accountPage.header.navMenu).toHaveText('Jane Doe');
     await loggedInApp.homePage.open();

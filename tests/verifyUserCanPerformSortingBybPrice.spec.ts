@@ -6,7 +6,7 @@ const sortingTestData = [
   { sortOption: 'Price (High - Low)', direction: 'descending' },
 ];
 
-test.describe('Verify user can perform sorting by price (asc & desc)', () => {
+test.describe('Verify user can perform sorting by price (asc & desc)', { tag: '@smoke' }, () => {
   sortingTestData.forEach((sorting) => {
     test(`Verify products are sorted by price ${sorting.direction}`, async ({ app }) => {
       await app.homePage.open();

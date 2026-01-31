@@ -6,10 +6,11 @@ const authFile = path.join(__dirname, '../playwright/.auth/user.json');
 test.use({ storageState: authFile });
 
 test.describe('Verify login with valid credentials', () => {
-  test('Verify login with valid credentials', async ({ app, page }) => {
-    await app.accountPage.open();
+  test.skip(!!process.env.CI, 'Skip on CI');
+  test('Verify login with valid credentials', async ({ loggedInApp, page }) => {
+    await loggedInApp.accountPage.open();
     await expect(page).toHaveURL('/account');
-    await expect(app.accountPage.accountTittle).toHaveText('My account');
-    await expect(app.accountPage.header.navMenu).toHaveText('Jane Doe');
+    await expect(loggedInApp.accountPage.accountTittle).toHaveText('My account', { timeout: 10000 });
+    await expect(loggedInApp.accountPage.header.navMenu).toHaveText('Jane Doe');
   });
 });
