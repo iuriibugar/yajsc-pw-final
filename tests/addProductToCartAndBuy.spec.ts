@@ -5,7 +5,7 @@ import { ADDRESS_DATA, PAYMENT_DATA } from '../testData/checkout.data';
 
 test.describe('Check user can add product to cart and buy it', () => {
   test('Check user can add product to cart and buy it', async ({ loggedInApp }) => {
-    await expect(loggedInApp.accountPage.page).toHaveURL('/account');
+    await expect(loggedInApp.accountPage.header.navMenu).toHaveText('Jane Doe');
     await loggedInApp.homePage.open();
     await loggedInApp.homePage.productName.first().click();
 
