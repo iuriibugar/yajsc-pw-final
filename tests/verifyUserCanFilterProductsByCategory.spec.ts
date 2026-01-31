@@ -4,7 +4,7 @@ import { PowerTools } from '../enams/powerTools.enum';
 
 const filterCategory = PowerTools.Sander;
 
-test.describe('Verify user can filter products by category', () => {
+test.describe('Verify user can filter products by category', { tag: '@smoke' }, () => {
   test(`Verify products are filter by category ${filterCategory}`, async ({ app }) => {
     await app.homePage.open();
     await app.homePage.selectFilterCheckbox(filterCategory);

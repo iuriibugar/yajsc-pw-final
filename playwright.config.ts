@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { BASE_URL } from './constants';
+import { BASE_URL } from './config/baseConfig';
 
 /**
  * Read environment variables from file.
@@ -19,7 +19,7 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -34,6 +34,8 @@ export default defineConfig({
 
     /* Configure testIdAttribute to use data-test instead of data-testid */
     testIdAttribute: 'data-test',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
@@ -41,6 +43,24 @@ export default defineConfig({
     // { name: 'auth', testMatch: /auth.login\.spec\.ts/ },
     {
       name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+      // dependencies: ['auth'],
+    },
+
+    {
+      name: 'smoke-chromium',
+      grep: /@smoke/,
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+      // dependencies: ['auth'],
+    },
+
+    {
+      name: 'regression-chromium',
+      grep: /@regression/,
       use: {
         ...devices['Desktop Chrome'],
       },

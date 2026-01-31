@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  test:
+  smoke:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     env:
@@ -24,7 +24,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test --project=chromium
+      run: npx playwright test --project=smoke-chromium
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
