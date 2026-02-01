@@ -27,11 +27,10 @@ export const test = base.extend<MyFixtures>({
     const jsonData = await resp.json();
     const token = jsonData.access_token;
 
-    await page.goto('/');
     await page.addInitScript((token) => {
       window.localStorage.setItem('auth-token', token);
     }, token);
-    await page.reload();
+    await page.goto('/');
 
     const app = new App(page);
     await use(app);
