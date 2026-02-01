@@ -9,15 +9,20 @@ const sortingTestData = [
 test.describe('Verify user can perform sorting by name (asc & desc)', { tag: '@smoke' }, () => {
   sortingTestData.forEach((sorting) => {
     test(`Verify products are sorted by name ${sorting.direction}`, async ({ app }) => {
-      await app.homePage.open();
-      await app.homePage.selectSortOption(sorting.sortOption, 'sort=name');
-      const productNames = await app.homePage.productName.allInnerTexts();
-      const sortedNames = [...productNames].sort();
+      await test.step('Open home page', async () => {
+        await app.homePage.open();
+      });
 
-      if (sorting.direction === 'descending') {
-        sortedNames.reverse();
-      }
-      expect(productNames).toEqual(sortedNames);
+      await test.step('Sort products by name and verify sorting', async () => {
+        await app.homePage.selectSortOption(sorting.sortOption, 'sort=name');
+        const productNames = await app.homePage.productName.allInnerTexts();
+        const sortedNames = [...productNames].sort();
+
+        if (sorting.direction === 'descending') {
+          sortedNames.reverse();
+        }
+        expect(productNames).toEqual(sortedNames);
+      });
     });
   });
 });

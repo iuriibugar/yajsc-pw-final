@@ -6,13 +6,18 @@ const filterCategory = PowerTools.Sander;
 
 test.describe('Verify user can filter products by category', { tag: '@smoke' }, () => {
   test(`Verify products are filter by category ${filterCategory}`, async ({ app }) => {
-    await app.homePage.open();
-    await app.homePage.selectFilterCheckbox(filterCategory);
-    const productNames = await app.homePage.productName.all();
+    await test.step('Open home page', async () => {
+      await app.homePage.open();
+    });
 
-    for (const product of productNames) {
-      const text = await product.innerText();
-      expect(text).toContain(filterCategory);
-    }
+    await test.step('Sort products by category and verify sorting', async () => {
+      await app.homePage.selectFilterCheckbox(filterCategory);
+      const productNames = await app.homePage.productName.all();
+
+      for (const product of productNames) {
+        const text = await product.innerText();
+        expect(text).toContain(filterCategory);
+      }
+    });
   });
 });
