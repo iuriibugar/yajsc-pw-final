@@ -30,7 +30,6 @@ export const test = base.extend<MyFixtures>({
     await page.addInitScript((token) => {
       window.localStorage.setItem('auth-token', token);
     }, token);
-    await page.goto('/');
 
     const app = new App(page);
     await use(app);
