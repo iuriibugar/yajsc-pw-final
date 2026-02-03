@@ -16,6 +16,8 @@ test.describe('Verify user can see mock 20 products on page', { tag: '@regressio
       await loggedInApp.homePage.open();
     });
 
+    await expect.poll(async () => loggedInApp.homePage.productName.first().isVisible()).toBe(true);
+
     await test.step('Verify 20 products are displayed', async () => {
       expect(await loggedInApp.homePage.productName.count()).toBe(20);
       const productNames = await loggedInApp.homePage.productName.all();
