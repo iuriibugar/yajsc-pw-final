@@ -1,8 +1,7 @@
 import { test as base } from '@playwright/test';
 import { App } from './pages/app.page';
 // import path from 'path';
-import { validCredentials } from './testData/credentials';
-import { API_BASE_URL } from './constants';
+import { BASE_API_URL, USER_EMAIL, USER_PASSWORD } from './config/baseConfig';
 
 // const authFile = path.join(__dirname, './playwright/.auth/user.json');
 
@@ -19,20 +18,18 @@ export const test = base.extend<MyFixtures>({
   },
   // Авторизація через API
   loggedInApp: async ({ request, page }, use) => {
-    const resp = await request.post(`${API_BASE_URL}/users/login`, {
+    const resp = await request.post(`${BASE_API_URL}/users/login`, {
       data: {
-        email: validCredentials.email,
-        password: validCredentials.password,
+        email: USER_EMAIL,
+        password: USER_PASSWORD,
       },
     });
     const jsonData = await resp.json();
     const token = jsonData.access_token;
 
-    await page.goto('/');
-    await page.evaluate((token) => {
-      localStorage.setItem('auth-token', token);
+    await page.addInitScript((token) => {
+      window.localStorage.setItem('auth-token', token);
     }, token);
-    await page.reload();
 
     const app = new App(page);
     await use(app);

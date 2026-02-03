@@ -6,18 +6,22 @@ const sortingTestData = [
   { sortOption: 'Price (High - Low)', direction: 'descending' },
 ];
 
-test.describe('Verify user can perform sorting by price (asc & desc)', () => {
+test.describe('Verify user can perform sorting by price (asc & desc)', { tag: '@smoke' }, () => {
   sortingTestData.forEach((sorting) => {
     test(`Verify products are sorted by price ${sorting.direction}`, async ({ app }) => {
-      await app.homePage.open();
-      await app.homePage.selectSortOption(sorting.sortOption, 'sort=price');
-      const productPrices = await app.homePage.productPrice.allInnerTexts();
-      const sortedPrices = [...productPrices].sort();
+      await test.step('Open home page', async () => {
+        await app.homePage.open();
+      });
+      await test.step('Sort products by price and verify sorting', async () => {
+        await app.homePage.selectSortOption(sorting.sortOption, 'sort=price');
+        const productPrices = await app.homePage.productPrice.allInnerTexts();
+        const sortedPrices = [...productPrices].sort();
 
-      if (sorting.direction === 'descending') {
-        sortedPrices.reverse();
-      }
-      expect(productPrices).toEqual(sortedPrices);
+        if (sorting.direction === 'descending') {
+          sortedPrices.reverse();
+        }
+        expect(productPrices).toEqual(sortedPrices);
+      });
     });
   });
 });
